@@ -3,6 +3,8 @@ package two_state_Simulation;
 public class customer {
 	private double arrivalTime;
 	private int arrivalstate;
+	private double startServiceTime;
+	private int startServiceState;
 	
 	public customer(double a, int b){
 		arrivalTime = a;
@@ -15,6 +17,22 @@ public class customer {
 	
 	public int getArrState(){
 		return arrivalstate;
+	}
+	
+	public double getStartServiceTime(){
+		return startServiceTime;
+	}
+	
+	public void setStartServiceTime(double t){
+		startServiceTime = t;
+	}
+	
+	public int getStartServiceState(){
+		return startServiceState;
+	}
+	
+	public void setStartServiceState(int t){
+		startServiceState = t;
 	}
 
 }
