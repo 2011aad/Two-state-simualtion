@@ -29,6 +29,9 @@ public class stochasticProcess {
 	public double WT;
 	public double[][] data = {residual_service_time_state[0],residual_service_time_state[1],service_time_state[0],service_time_state[1]};							//data for other class using 
 	public int [][] counters = new int[2][2];
+	public double [] idle_time = new double [2];
+	public double [] busy_time = new double [2];
+	public double [] P0 = new double [2];
 	
 	public stochasticProcess(int numofcus){
 		for(int i=0;i<1;i++)
@@ -52,6 +55,8 @@ public class stochasticProcess {
 	
 			//compare which action occurs first
 			if(arri<departure && arri<trans){								//arrival happens first	
+				if(buffer.size()==0) idle_time[sysStat] += (arri - systime);
+				else busy_time[sysStat] += (arri - systime);
 				systime = arri;
 				c = new customer(systime, sysStat);
 				if((sysStat==1)){						//state 0
@@ -65,6 +70,7 @@ public class stochasticProcess {
 					last_arrtime = systime;
 					c.setStartServiceTime(systime);
 					c.setStartServiceState(sysStat);
+					arrivals[c.getArrState()]++;
 				}
 				
 				else{								//nonempty
@@ -77,6 +83,7 @@ public class stochasticProcess {
 			}
 			
 			if(departure<arri && departure<trans){							//departure happens first
+				busy_time[sysStat] += (departure - systime);
 				systime = departure;
 				last_action = states.dep;
 				
@@ -118,6 +125,8 @@ public class stochasticProcess {
 			}
 			
 			if(trans<departure && trans<arri){									//state transition happens first
+				if(buffer.size()==0) idle_time[sysStat] += (trans - systime);
+				else busy_time[sysStat] += (trans - systime);
 				systime = trans;
 				if(sysStat==0 && buffer.isEmpty()){				//state 0 & empty
 
@@ -145,6 +154,9 @@ public class stochasticProcess {
 			for(int j=0;j<residual_service_time_state[i].length;j++)
 				residual_service_time_state[i][j] /= counters[1][i];
 		
+		for(int i=0;i<P0.length;i++)
+			P0[i] = (idle_time[i]/(idle_time[i]+busy_time[i]));
+		
 		print_out(numofcus);
 	}
 	
@@ -158,7 +170,7 @@ public class stochasticProcess {
 		System.out.println("average waiting time: " + totalWT/numofcus);
 		System.out.println("residual service time of state 0 arrivals: " + residual_service_time[0]/arrivals[0]);
 		System.out.println("residual service time of state 1 arrivals: " + residual_service_time[1]/arrivals[1]);
-		System.out.println("service time of start at state 0: " + service_time[0]/departures[0]);
-		System.out.println("service time of start at state 1: " + service_time[1]/departures[1]);
+		System.out.println("service time of start at state 0: " + (1-P0[0])*service_time[0]/departures[0]);
+		System.out.println("service time of start at state 1: " + (1-P0[1])*service_time[1]/departures[1]);
 	}
 }
