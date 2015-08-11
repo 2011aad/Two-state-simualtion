@@ -1,6 +1,5 @@
-package two_state_Simulation;
 
-public class customer {
+class customer {
 	private double arrivalTime;
 	private int arrivalstate;
 	private double startServiceTime;

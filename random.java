@@ -1,4 +1,3 @@
-package two_state_Simulation;
 
 import java.util.Date;
 

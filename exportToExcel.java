@@ -1,5 +1,3 @@
-package two_state_Simulation;
-
 import java.io.File;
 
 import jxl.*;
