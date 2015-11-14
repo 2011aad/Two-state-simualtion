@@ -1,4 +1,4 @@
-package two_state_Simulation;
+
 
 import java.util.Date;
 
@@ -16,7 +16,7 @@ public class random {
 
 	public static double UniformDistribution() {
 		return (double)f(x)/mod;
-	}
+	} //uniform distribution within [0,1]
 	
 	public static long f(long a){
 		return x = (5*5*5*5*5*a) % mod;

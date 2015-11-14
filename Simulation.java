@@ -1,4 +1,4 @@
-package two_state_Simulation;
+
 
 public class Simulation {
 	public static void main(String[] args){

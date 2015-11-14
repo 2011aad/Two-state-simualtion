@@ -1,4 +1,4 @@
-package two_state_Simulation;
+
 
 public class customer {
 	private double arrivalTime;
