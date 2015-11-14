@@ -1,4 +1,5 @@
 import java.io.File;
+import java.io.FileOutputStream;
 
 import jxl.*;
 import jxl.write.Label;
@@ -7,21 +8,17 @@ import jxl.write.WritableWorkbook;
 
 public class exportToExcel {
 	
-	public exportToExcel(double[][] data) {
+	public exportToExcel(double[][] data, String para, String result) {
 		try{
-			WritableWorkbook w = Workbook.createWorkbook(new File("data3.xls"));
+			WritableWorkbook w = Workbook.createWorkbook(new FileOutputStream("data.xls"));
 			WritableSheet sheet = w.createSheet("data", 0);
-			sheet.addCell(new Label(1,0,"residual service time of state 0 arrivals"));
-			sheet.addCell(new Label(2,0,"residual service time of state 1 arrivals"));
-			sheet.addCell(new Label(3,0,"service time of start at state 0"));
-			sheet.addCell(new Label(4,0,"service time of start at state 1"));
-			
-			for(int i=1;i<data[0].length+1;i++)
-				sheet.addCell(new jxl.write.Number(0,i,0.05*(i-0.5)));
-			
-			for(int i=0;i<data.length;i++)
-				for(int j=1;j<data[i].length+1;j++)
-					sheet.addCell(new jxl.write.Number(i+1,j,data[i][j-1]));
+			sheet.addCell(new Label(0, 1, para));
+			sheet.addCell(new Label(0, 2, result));
+
+			for(int i=0;i<data[0].length;i++)
+				sheet.addCell(new jxl.write.Number(i+1, 1, data[0][i]));
+			for(int i=0;i<data[1].length;i++)
+				sheet.addCell(new jxl.write.Number(i+1, 2, data[1][i]));
 				
 			w.write();
 			w.close();

@@ -3,8 +3,8 @@ import java.util.Date;
 
 public class random {
 	
-	public static long mod = 1;
-	public static long x;
+	private long mod = 1;
+	private long x;
 	
 	public random(){
 		Date date = new Date();
@@ -13,11 +13,11 @@ public class random {
 		mod = mod - 31;
 	}
 
-	public static double UniformDistribution() {
+	public double UniformDistribution() {
 		return (double)f(x)/mod;
 	}
 	
-	public static long f(long a){
+	private long f(long a){
 		return x = (5*5*5*5*5*a) % mod;
 	}
 	
